@@ -1,0 +1,33 @@
+.container {
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+section {
+  margin: auto;
+  width: 100px;
+  padding-left: 15px;
+}
+
+button {
+  height: 35px;
+  width: 35px;
+  font-size: 20px;
+}
+
+.decrease {
+  background-color: #ef7575;
+}
+
+.increase {
+  background-color: #88ea56;
+}
+
+.count {
+  border: 2px dotted #7f827e;
+  margin-top: 15px;
+  padding: 10px 15px;
+}
