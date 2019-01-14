@@ -6,7 +6,7 @@ class Counter extends React.Component {
   constructor() {
     super();
     // this.fruitNameRef = React.createRef();
-    this.handleChange = this.handleChange.bind(this);
+    // this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.updateState = this.updateState.bind(this);
     this.handleEnter = this.handleEnter.bind(this);
@@ -32,20 +32,21 @@ class Counter extends React.Component {
   updateState(response) {
     this.setState({ apiData: response.data });
   }
-  handleChange(id) {
-    console.log('updated name: ', this.refs[`fruit${id}`].textContent);
-  }
+  // handleChange(id) {
+  //   console.log('updated name: ', this.refs[`fruit${id}`].textContent);
+  //   console.log('state ');
+  //   this.setState({});
+  // }
   handleClick(itemId, toDo) {
     axios
       .get(`${this.state.url}/data/${toDo}/${itemId}`)
       .then(this.updateState);
   }
-  handleEnter(event) {
+  handleEnter(event, itemId) {
     if (event.keyCode === 13) {
       event.preventDefault();
-      console.log('stopped new line! ', this.state.apiData);
+      console.log('new value ', this.refs[`fruit${itemId}`].textContent);
     }
-    // console.log(event.keyCode);
   }
   htmlItem(item) {
     return { __html: item };
@@ -63,8 +64,7 @@ class Counter extends React.Component {
                   ref={'fruit' + item.id}
                   className="inline"
                   contentEditable={true}
-                  onKeyDown={this.handleEnter}
-                  onInput={() => this.handleChange(item.id)}
+                  onKeyDown={event => this.handleEnter(event, item.id)}
                   dangerouslySetInnerHTML={{ __html: item.fruit }}
                 />{' '}
                 : <p className="inline">{item.count}</p>
