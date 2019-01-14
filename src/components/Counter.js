@@ -5,8 +5,6 @@ import './Counter.css';
 class Counter extends React.Component {
   constructor() {
     super();
-    // this.fruitNameRef = React.createRef();
-    // this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.updateState = this.updateState.bind(this);
     this.handleEnter = this.handleEnter.bind(this);
@@ -32,11 +30,6 @@ class Counter extends React.Component {
   updateState(response) {
     this.setState({ apiData: response.data });
   }
-  // handleChange(id) {
-  //   console.log('updated name: ', this.refs[`fruit${id}`].textContent);
-  //   console.log('state ');
-  //   this.setState({});
-  // }
   handleClick(itemId, toDo) {
     axios
       .get(`${this.state.url}/data/${toDo}/${itemId}`)
@@ -45,7 +38,10 @@ class Counter extends React.Component {
   handleEnter(event, itemId) {
     if (event.keyCode === 13) {
       event.preventDefault();
-      console.log('new value ', this.refs[`fruit${itemId}`].textContent);
+      const updatedName = this.refs[`fruit${itemId}`].textContent;
+      axios
+        .post(`${this.state.url}/data/name/${itemId}`, { name: updatedName })
+        .then(this.updateState);
     }
   }
   htmlItem(item) {
