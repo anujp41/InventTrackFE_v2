@@ -8,7 +8,7 @@ class Counter extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.updateState = this.updateState.bind(this);
     this.handleEnter = this.handleEnter.bind(this);
-    this.htmlItem = this.htmlItem.bind(this);
+    this.updateName = this.updateName.bind(this);
     this.state = {
       counter: 0,
       url: '',
@@ -38,18 +38,17 @@ class Counter extends React.Component {
   handleEnter(event, itemId) {
     if (event.keyCode === 13) {
       event.preventDefault();
-      const updatedName = this.refs[`fruit${itemId}`].textContent;
-      axios
-        .post(`${this.state.url}/data/name/${itemId}`, { name: updatedName })
-        .then(this.updateState);
+      this.updateName(itemId);
     }
   }
-  htmlItem(item) {
-    return { __html: item };
+  updateName(itemId) {
+    const updatedName = this.refs[`fruit${itemId}`].textContent;
+    axios
+      .post(`${this.state.url}/data/name/${itemId}`, { name: updatedName })
+      .then(this.updateState);
   }
   render() {
     const { apiData } = this.state;
-    console.log(apiData);
     return (
       <div className="container">
         {apiData.length > 0 &&
@@ -61,6 +60,7 @@ class Counter extends React.Component {
                   className="inline"
                   contentEditable={true}
                   onKeyDown={event => this.handleEnter(event, item.id)}
+                  onBlur={() => this.updateName(item.id)}
                   dangerouslySetInnerHTML={{ __html: item.fruit }}
                 />{' '}
                 : <p className="inline">{item.count}</p>
