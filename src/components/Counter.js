@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import './Counter.css';
+import Modal from './Modal';
 
 class Counter extends React.Component {
   constructor() {
@@ -95,16 +96,7 @@ class Counter extends React.Component {
             Add Item
           </button>
         </div>
-        {this.state.showModal && (
-          <div className="modal-container">
-            <div className="modal">
-              <span onClick={() => this.modalView(false)}>X</span>
-              <input className="fruit" type="text" placeholder="Fruit Name" />
-              <input className="fruit" type="number" placeholder="Count" />
-              <button className="add-button margin-auto">Submit</button>
-            </div>
-          </div>
-        )}
+        {this.state.showModal && <Modal closeModal={this.modalView} />}
       </div>
     );
   }
