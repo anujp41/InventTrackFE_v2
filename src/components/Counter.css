@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: -5px 5px 15px #e0d2ef;
+  box-shadow: -5px 5px 20px 10px #e0d2ef;
 }
 
 .col-container {
@@ -36,6 +36,11 @@ button {
 
 .increase {
   background-color: #88ea56;
+}
+
+.remove {
+  background-color: #17a2b8;
+  color: white;
 }
 
 .count {

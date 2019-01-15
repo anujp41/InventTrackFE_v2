@@ -92,6 +92,12 @@ class Counter extends React.Component {
                   >
                     +
                   </button>
+                  <button
+                    className="remove"
+                    onClick={() => this.handleClick(item.id, 'remove')}
+                  >
+                    x
+                  </button>
                 </section>
               </div>
             ))}
