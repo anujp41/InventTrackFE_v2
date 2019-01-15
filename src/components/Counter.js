@@ -11,10 +11,9 @@ class Counter extends React.Component {
     this.handleEnter = this.handleEnter.bind(this);
     this.updateName = this.updateName.bind(this);
     this.modalView = this.modalView.bind(this);
+    this.saveData = this.saveData.bind(this);
     this.state = {
-      counter: 0,
       url: '',
-      editMe: true,
       apiData: [],
       showModal: false
     };
@@ -53,11 +52,19 @@ class Counter extends React.Component {
   modalView(showModal) {
     this.setState({ showModal });
   }
+  saveData(fruitData) {
+    axios.post(`${this.state.url}/data/fruit`, fruitData).then(res => {
+      if (res.status === 200) {
+        this.updateState(res);
+        this.modalView(false);
+      }
+    });
+  }
   render() {
     const { apiData } = this.state;
     return (
-      <div>
-        <div className="container">
+      <div className="container">
+        <div classname="col-container">
           {apiData.length > 0 &&
             apiData.map(item => (
               <div key={item.fruit} className="fruit-container">
@@ -88,15 +95,20 @@ class Counter extends React.Component {
                 </section>
               </div>
             ))}
-
-          <button
-            className="add-button center"
-            onClick={() => this.modalView(true)}
-          >
-            Add Item
-          </button>
         </div>
-        {this.state.showModal && <Modal closeModal={this.modalView} />}
+        <button
+          {/* className="add-button center" */}
+          onClick={() => this.modalView(true)}
+        >
+          Add Item
+        </button>
+        {this.state.showModal && (
+          <Modal
+            closeModal={this.modalView}
+            apiURL={this.state.url}
+            handleSave={this.saveData}
+          />
+        )}
       </div>
     );
   }

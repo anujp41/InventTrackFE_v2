@@ -1,9 +1,19 @@
 .container {
   position: absolute;
-  bottom: 100px;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -45%);
+  height: 60%;
+  width: 80%;
+  background-color: goldenrod;
+  display: flex;
+  flex-direction: column;
+}
+
+.col-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
 
 .fruit-container {
@@ -12,6 +22,7 @@
   border: 2px dashed #7f827e;
   margin: 10px 0;
   padding: 10px 5px;
+  max-width: 33.333%;
 }
 
 button {

@@ -1,17 +1,28 @@
 import React from 'react';
-import axios from 'axios';
 import './Modal.css';
 
 class Modal extends React.Component {
   constructor(props) {
     super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
-      name: '',
-      count: 0
+      fruit: '',
+      count: ''
     };
   }
-
+  handleChange(event) {
+    const {
+      target: { name, value }
+    } = event;
+    this.setState({ [name]: value });
+  }
+  handleSubmit(event) {
+    event.preventDefault();
+    this.props.handleSave(this.state);
+  }
   render() {
+    const { fruit, count } = this.state;
     return (
       <div className="modal-container">
         <div className="modal">
@@ -19,17 +30,25 @@ class Modal extends React.Component {
           <input
             className="fruit"
             type="text"
-            name="name"
+            name="fruit"
             placeholder="Fruit Name"
-            onChange={this.modalChange}
+            value={fruit}
+            onChange={this.handleChange}
           />
           <input
             className="fruit"
             type="number"
             name="count"
             placeholder="Count"
+            value={count !== '' ? count : ''}
+            onChange={this.handleChange}
           />
-          <button className="add-button margin-auto">Submit</button>
+          <button
+            className="add-button margin-auto"
+            onClick={this.handleSubmit}
+          >
+            Submit
+          </button>
         </div>
       </div>
     );
