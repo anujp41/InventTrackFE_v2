@@ -5,24 +5,23 @@
   transform: translate(-50%, -45%);
   height: 60%;
   width: 80%;
-  background-color: goldenrod;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  box-shadow: -5px -10px 10px #e2f7aa;
 }
 
 .col-container {
   display: flex;
-  flex-direction: column;
   flex-wrap: wrap;
 }
 
 .fruit-container {
   display: flex;
   justify-content: space-around;
-  border: 2px dashed #7f827e;
-  margin: 10px 0;
+  border-bottom: 2px dashed #7f827e;
+  margin: 10px;
   padding: 10px 5px;
-  max-width: 33.333%;
 }
 
 button {
@@ -77,5 +76,6 @@ button {
 .center {
   position: absolute;
   left: 50%;
+  bottom: 10px;
   transform: translateX(-50%);
 }

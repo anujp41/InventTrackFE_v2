@@ -64,7 +64,7 @@ class Counter extends React.Component {
     const { apiData } = this.state;
     return (
       <div className="container">
-        <div classname="col-container">
+        <div className="col-container">
           {apiData.length > 0 &&
             apiData.map(item => (
               <div key={item.fruit} className="fruit-container">
@@ -97,7 +97,7 @@ class Counter extends React.Component {
             ))}
         </div>
         <button
-          {/* className="add-button center" */}
+          className="add-button center"
           onClick={() => this.modalView(true)}
         >
           Add Item
