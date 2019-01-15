@@ -9,11 +9,13 @@ class Counter extends React.Component {
     this.updateState = this.updateState.bind(this);
     this.handleEnter = this.handleEnter.bind(this);
     this.updateName = this.updateName.bind(this);
+    this.modalView = this.modalView.bind(this);
     this.state = {
       counter: 0,
       url: '',
       editMe: true,
-      apiData: []
+      apiData: [],
+      showModal: false
     };
   }
   componentDidMount() {
@@ -47,40 +49,62 @@ class Counter extends React.Component {
       .post(`${this.state.url}/data/name/${itemId}`, { name: updatedName })
       .then(this.updateState);
   }
+  modalView(showModal) {
+    this.setState({ showModal });
+  }
   render() {
     const { apiData } = this.state;
     return (
-      <div className="container">
-        {apiData.length > 0 &&
-          apiData.map(item => (
-            <div key={item.fruit} className="fruit-container">
-              <div className="count">
-                <p
-                  ref={'fruit' + item.id}
-                  className="inline"
-                  contentEditable={true}
-                  onKeyDown={event => this.handleEnter(event, item.id)}
-                  onBlur={() => this.updateName(item.id)}
-                  dangerouslySetInnerHTML={{ __html: item.fruit }}
-                />{' '}
-                : <p className="inline">{item.count}</p>
+      <div>
+        <div className="container">
+          {apiData.length > 0 &&
+            apiData.map(item => (
+              <div key={item.fruit} className="fruit-container">
+                <div className="count">
+                  <p
+                    ref={'fruit' + item.id}
+                    className="inline"
+                    contentEditable={true}
+                    onKeyDown={event => this.handleEnter(event, item.id)}
+                    onBlur={() => this.updateName(item.id)}
+                    dangerouslySetInnerHTML={{ __html: item.fruit }}
+                  />{' '}
+                  : <p className="inline">{item.count}</p>
+                </div>
+                <section>
+                  <button
+                    className="decrease"
+                    onClick={() => this.handleClick(item.id, 'subtract')}
+                  >
+                    -
+                  </button>
+                  <button
+                    className="increase"
+                    onClick={() => this.handleClick(item.id, 'add')}
+                  >
+                    +
+                  </button>
+                </section>
               </div>
-              <section>
-                <button
-                  className="decrease"
-                  onClick={() => this.handleClick(item.id, 'subtract')}
-                >
-                  -
-                </button>
-                <button
-                  className="increase"
-                  onClick={() => this.handleClick(item.id, 'add')}
-                >
-                  +
-                </button>
-              </section>
+            ))}
+
+          <button
+            className="add-button center"
+            onClick={() => this.modalView(true)}
+          >
+            Add Item
+          </button>
+        </div>
+        {this.state.showModal && (
+          <div className="modal-container">
+            <div className="modal">
+              <span onClick={() => this.modalView(false)}>X</span>
+              <input className="fruit" type="text" placeholder="Fruit Name" />
+              <input className="fruit" type="number" placeholder="Count" />
+              <button className="add-button margin-auto">Submit</button>
             </div>
-          ))}
+          </div>
+        )}
       </div>
     );
   }
