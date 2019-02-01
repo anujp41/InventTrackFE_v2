@@ -8,6 +8,7 @@ class Counter extends React.Component {
     super();
     this.handleClick = this.handleClick.bind(this);
     this.updateState = this.updateState.bind(this);
+    this.updateApiData = this.updateApiData.bind(this);
     this.handleEnter = this.handleEnter.bind(this);
     this.updateName = this.updateName.bind(this);
     this.modalView = this.modalView.bind(this);
@@ -19,11 +20,9 @@ class Counter extends React.Component {
     };
   }
   componentDidMount() {
-    this.props.socket.on('updatedCount', data => {
-      const socketData = { [data.id]: data };
-      const newApiData = { ...this.state.apiData, ...socketData };
-      this.setState({ apiData: newApiData });
-    });
+    //mounted to component to listen for socket updates on total fruit counter
+    this.props.socket.on('updatedCount', data => this.updateApiData(data));
+    // will call data for most recent fruit counter data
     const url =
       process.env.NODE_ENV === 'development'
         ? process.env.REACT_APP_DEV_URL
@@ -37,6 +36,11 @@ class Counter extends React.Component {
   updateState(response) {
     this.setState({ apiData: response.data });
   }
+  updateApiData(updatedData) {
+    const newData = { [updatedData.id]: updatedData };
+    const newApiData = { ...this.state.apiData, ...newData };
+    this.setState({ apiData: newApiData });
+  }
   handleClick(itemId, toDo) {
     axios
       .get(`${this.state.url}/data/${toDo}/${itemId}`, {
@@ -44,12 +48,7 @@ class Counter extends React.Component {
           Socket: localStorage.getItem('socketId')
         }
       })
-      .then(response => {
-        const data = response.data;
-        const socketData = { [data.id]: data };
-        const newApiData = { ...this.state.apiData, ...socketData };
-        this.setState({ apiData: newApiData });
-      });
+      .then(response => this.updateApiData(response.data));
   }
   handleEnter(event, itemId) {
     if (event.keyCode === 13) {
