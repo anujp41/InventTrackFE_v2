@@ -19,6 +19,11 @@ class Counter extends React.Component {
     };
   }
   componentDidMount() {
+    this.props.socket.on('updatedCount', data => {
+      const socketData = { [data.id]: data };
+      const newApiData = { ...this.state.apiData, ...socketData };
+      this.setState({ apiData: newApiData });
+    });
     const url =
       process.env.NODE_ENV === 'development'
         ? process.env.REACT_APP_DEV_URL
@@ -34,8 +39,17 @@ class Counter extends React.Component {
   }
   handleClick(itemId, toDo) {
     axios
-      .get(`${this.state.url}/data/${toDo}/${itemId}`)
-      .then(this.updateState);
+      .get(`${this.state.url}/data/${toDo}/${itemId}`, {
+        headers: {
+          Socket: localStorage.getItem('socketId')
+        }
+      })
+      .then(response => {
+        const data = response.data;
+        const socketData = { [data.id]: data };
+        const newApiData = { ...this.state.apiData, ...socketData };
+        this.setState({ apiData: newApiData });
+      });
   }
   handleEnter(event, itemId) {
     if (event.keyCode === 13) {
@@ -61,13 +75,13 @@ class Counter extends React.Component {
     });
   }
   render() {
-    const { apiData } = this.state;
+    const apiDataValues = Object.values(this.state.apiData);
     return (
       <div className="container">
         <div className="col-container">
-          {apiData.length > 0 &&
-            apiData.map(item => (
-              <div key={item.fruit} className="fruit-container">
+          {apiDataValues.length > 0 &&
+            apiDataValues.map(item => (
+              <div key={item.name + item.count} className="fruit-container">
                 <div className="count">
                   <p
                     ref={'fruit' + item.id}
@@ -75,7 +89,7 @@ class Counter extends React.Component {
                     contentEditable={true}
                     onKeyDown={event => this.handleEnter(event, item.id)}
                     onBlur={() => this.updateName(item.id)}
-                    dangerouslySetInnerHTML={{ __html: item.fruit }}
+                    dangerouslySetInnerHTML={{ __html: item.name }}
                   />{' '}
                   : <p className="inline">{item.count}</p>
                 </div>
