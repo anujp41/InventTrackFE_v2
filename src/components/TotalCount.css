@@ -1,0 +1,73 @@
+.col-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.fruit-container {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 2px dashed #7f827e;
+  margin: 10px;
+  padding: 10px 5px;
+}
+
+button {
+  height: 35px;
+  width: 35px;
+  font-size: 20px;
+}
+
+.decrease {
+  background-color: #ef7575;
+}
+
+.increase {
+  background-color: #88ea56;
+}
+
+.remove {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.count {
+  padding: 10px 15px;
+}
+
+.input-edit {
+  border: none;
+}
+
+.inline {
+  display: inline;
+}
+
+.input-text {
+  font: inherit;
+  text-align: center;
+  border: none;
+}
+
+.add-button {
+  padding: 15px 25px;
+  width: 150px;
+  height: 50px;
+  border-radius: 25px;
+  background-color: #218838;
+  color: white;
+  cursor: pointer;
+  box-shadow: 4px 5px #888888;
+  transition: all 0.5s;
+}
+
+.add-button:active {
+  background-color: #82db55;
+  transform: translate(-50%, 5%);
+}
+
+.center {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  transform: translateX(-50%);
+}

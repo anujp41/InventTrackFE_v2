@@ -13,7 +13,7 @@ footer {
 
 header {
   top: 0;
-  height: 150px;
+  height: 7%;
   width: inherit;
   background-color: antiquewhite;
   font-size: 50px;
@@ -21,7 +21,7 @@ header {
 
 footer {
   bottom: 0;
-  height: 100px;
+  height: 5%;
   width: inherit;
   background-color: antiquewhite;
 }
