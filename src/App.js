@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
+import { Route, Switch, Router } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 import { Counter, Wrapper } from './components';
 import socketIOClient from 'socket.io-client';
+
+const webHistory = createBrowserHistory();
 
 class App extends Component {
   constructor() {
@@ -22,9 +26,23 @@ class App extends Component {
   }
   render() {
     return (
-      <Wrapper>
-        {this.state.socket && <Counter socket={this.state.socket} />}
-      </Wrapper>
+      <Router history={webHistory}>
+        <Wrapper>
+          <Switch>
+            {['/', '/counter'].map(url => (
+              <Route
+                key={url}
+                path={url}
+                render={props =>
+                  this.state.socket ? (
+                    <Counter {...props} socket={this.state.socket} />
+                  ) : null
+                }
+              />
+            ))}
+          </Switch>
+        </Wrapper>
+      </Router>
     );
   }
 }
