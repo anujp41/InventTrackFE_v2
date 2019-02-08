@@ -9,6 +9,7 @@ footer {
   display: block;
   position: absolute;
   border: 3px solid black;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 header {
@@ -16,7 +17,8 @@ header {
   height: 7%;
   width: inherit;
   background-color: antiquewhite;
-  font-size: 50px;
+  font-size: 3rem;
+  font-weight: 900;
 }
 
 footer {

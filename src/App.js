@@ -20,10 +20,6 @@ class App extends Component {
       this.setState({ socket });
       localStorage.setItem('socketId', socket.id);
     });
-    // socket
-    //   .on('asdf', this.handleConnect)
-    //   .on('asdf', this.handleSOmeEvent)
-    // socket.on('news', data => console.log('data from server', data));
   }
   componentWillUnmount() {
     this.state.socket.disconnect().then(this.setState({ socket: null }));
