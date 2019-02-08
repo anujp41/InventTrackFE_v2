@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch, Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
-import { Counter, Wrapper } from './components';
+import { Counter, Wrapper, Message } from './components';
 import socketIOClient from 'socket.io-client';
 
 const webHistory = createBrowserHistory();
@@ -10,7 +10,8 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      socket: null
+      socket: null,
+      displayMsg: false
     };
   }
   componentDidMount() {
@@ -19,6 +20,9 @@ class App extends Component {
       this.setState({ socket });
       localStorage.setItem('socketId', socket.id);
     });
+    // socket
+    //   .on('asdf', this.handleConnect)
+    //   .on('asdf', this.handleSOmeEvent)
     // socket.on('news', data => console.log('data from server', data));
   }
   componentWillUnmount() {
@@ -35,12 +39,17 @@ class App extends Component {
                 path={url}
                 render={props =>
                   this.state.socket ? (
-                    <Counter {...props} socket={this.state.socket} />
+                    <Counter
+                      {...props}
+                      socket={this.state.socket}
+                      cookies={this.props.cookies}
+                    />
                   ) : null
                 }
               />
             ))}
           </Switch>
+          {this.state.displayMsg && <Message />}
         </Wrapper>
       </Router>
     );

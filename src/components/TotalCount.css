@@ -1,14 +1,9 @@
-.col-container {
-  display: flex;
-  flex-wrap: wrap;
-}
-
 .fruit-container {
   display: flex;
   justify-content: space-around;
   border-bottom: 2px dashed #7f827e;
   margin: 10px;
-  padding: 10px 5px;
+  padding: 5px 0;
 }
 
 button {

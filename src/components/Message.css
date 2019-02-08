@@ -1,0 +1,8 @@
+.info-message {
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #efef70;
+  padding: 15px 25px;
+}

@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+// import './'
 import './TotalCount.css';
 
 class TotalCount extends React.Component {
@@ -18,9 +19,31 @@ class TotalCount extends React.Component {
       showModal: false
     };
   }
+
+  // socketListeners = [
+  //   {
+  //     eventName: 'updatedCount',
+  //     fn: async data => {},
+  //   }
+  // ]
+
   componentDidMount() {
     //mounted to component to listen for socket updates on total fruit counter
-    this.props.socket.on('updatedCount', data => this.updateApiData(data));
+    // this.socketListeners.forEach(listener => this.props.socket.on(listner.eventName, listener.fn));
+    this.props.socket
+      .on('updatedCount', async data => {
+        this.updateApiData(data.response);
+        const { socketId } = data;
+        socketId === (await localStorage.getItem('socketId'))
+          ? console.log('you updated!')
+          : console.log('someone else updated!');
+      })
+      .on('delete', () => {
+        console.log('will delete');
+      });
+    this.props.socket.on(function(event) {
+      console.log('event is ', event);
+    });
     // will call data for most recent fruit counter data
     const url =
       process.env.NODE_ENV === 'development'
@@ -41,13 +64,12 @@ class TotalCount extends React.Component {
     this.setState({ apiData: newApiData });
   }
   handleClick(itemId, toDo) {
-    axios
-      .get(`${this.state.url}/data/fruit/${toDo}/${itemId}`, {
-        headers: {
-          Socket: localStorage.getItem('socketId')
-        }
-      })
-      .then(response => this.updateApiData(response.data));
+    axios.get(`${this.state.url}/data/fruit/${toDo}/${itemId}`, {
+      headers: {
+        Socket: localStorage.getItem('socketId')
+      }
+    });
+    // .then(response => console.log('response complete ', response));
   }
   handleEnter(event, itemId) {
     if (event.keyCode === 13) {
