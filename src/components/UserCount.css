@@ -1,3 +1,59 @@
-.user-count {
-  border: 3px solid red;
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 250px;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+tr > th {
+  text-align: center;
+}
+
+.table-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(50px, 20%));
+  grid-template-rows: 50px;
+  margin: 0 10px 5px 0;
+}
+
+.table-grid > span {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #bae2df;
+  border: 1px solid rgba(204, 122, 232, 0.25);
+}
+
+.table-grid > span:nth-child(1) {
+  grid-column: 1 / -1;
+  color: #fafafa;
+  font-style: oblique;
+  font-weight: 900;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.table-grid > span:nth-child(even) {
+  grid-column: span 4;
+}
+
+.table-grid > span:nth-child(even):hover {
+  background-color: red;
+  cursor: pointer;
+}
+
+.none {
+  grid-column: 1 / -1 !important;
 }

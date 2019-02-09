@@ -22,11 +22,35 @@ class UserCount extends React.Component {
     // .catch(err => console.log('error ', err));
   }
   render() {
-    console.log('this ', this.state);
+    const { userData } = this.state;
+    userData.length && console.log(userData);
+    userData[0] &&
+      console.log('here ', userData[0] && userData[0].Consumer.length);
     return (
-      <div className="col-container">
+      <>
         <div className="header">User & Fruits</div>
-      </div>
+        <div className="col-container">
+          {userData.length &&
+            userData.map(userInfo => {
+              console.log('userInfo ', userInfo.Consumer);
+              return (
+                <div className="table-grid">
+                  <span key={userInfo.id + userInfo.name}>{userInfo.name}</span>
+                  {userInfo.Consumer.length ? (
+                    userInfo.Consumer.map(fruitInfo => (
+                      <>
+                        <span>{fruitInfo.name}</span>
+                        <span>{fruitInfo.UserFruit.counter}</span>
+                      </>
+                    ))
+                  ) : (
+                    <span className="none">None</span>
+                  )}
+                </div>
+              );
+            })}
+        </div>
+      </>
     );
   }
 }
