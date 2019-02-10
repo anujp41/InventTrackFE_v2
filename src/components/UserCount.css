@@ -43,6 +43,7 @@ tr > th {
   font-weight: 900;
   font-size: 1.5rem;
   text-align: center;
+  background-color: #44e2cc;
 }
 
 .table-grid > span:nth-child(even) {
@@ -50,10 +51,15 @@ tr > th {
 }
 
 .table-grid > span:nth-child(even):hover {
-  background-color: red;
+  background-color: #8fe866;
+  color: white;
   cursor: pointer;
 }
 
 .none {
   grid-column: 1 / -1 !important;
+}
+
+.none:hover {
+  background-color: none !important;
 }
