@@ -1,0 +1,13 @@
+.remainder {
+  text-align: center;
+  grid-gap: 20px;
+}
+
+.fruit-remain {
+  padding: 15px 0;
+  font-size: 1.25rem;
+  letter-spacing: 2px;
+  font-weight: 600;
+  color: white;
+  background-image: linear-gradient(135deg, #9eeaef, #a36fdb 65%);
+}

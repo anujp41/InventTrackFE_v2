@@ -25,12 +25,12 @@ class UserCount extends React.Component {
     axios
       .put(`${this.state.url}/data/user/`, { userId, fruitId })
       .then(response => {
-        console.log('respinse ', response);
         if (response.data !== 'Gone') {
-          const { userData } = this.state;
-          //need to increase in state and display
+          this.props.handleMsg(
+            true,
+            `Congrats, you have one more ${fruitName}!`
+          );
         } else {
-          //display message that all fruit is taken
           this.props.handleMsg(true, `Sorry, ${fruitName} is all gone!`);
         }
       });
@@ -38,7 +38,6 @@ class UserCount extends React.Component {
 
   render() {
     const { userData } = this.state;
-    console.log(userData);
     return (
       <>
         <div className="header">User & Fruits</div>

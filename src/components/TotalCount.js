@@ -19,13 +19,6 @@ class TotalCount extends React.Component {
     };
   }
 
-  // socketListeners = [
-  //   {
-  //     eventName: 'updatedCount',
-  //     fn: async data => {},
-  //   }
-  // ]
-
   componentDidMount() {
     //mounted to component to listen for socket updates on total fruit counter
     // this.socketListeners.forEach(listener => this.props.socket.on(listner.eventName, listener.fn));
@@ -42,9 +35,6 @@ class TotalCount extends React.Component {
         delete apiData[id];
         this.updateState({ data: apiData });
       });
-    this.props.socket.on(function(event) {
-      console.log('event is ', event);
-    });
     // will call data for most recent fruit counter data
     const url =
       process.env.NODE_ENV === 'development'
