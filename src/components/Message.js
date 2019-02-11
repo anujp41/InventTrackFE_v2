@@ -3,7 +3,7 @@ import './Message.css';
 
 const Message = ({ msgBody, handleMsg }) => {
   useEffect(() => {
-    setTimeout(() => handleMsg(false), 2000);
+    setTimeout(() => handleMsg(false), 1500);
   });
   return <h2 className="info-message">{msgBody}</h2>;
 };

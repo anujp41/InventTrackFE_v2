@@ -21,7 +21,7 @@ class UserCount extends React.Component {
       .then(response => this.setState({ userData: response.data, url }));
   }
 
-  handleClick(userId, fruitId) {
+  handleClick(userId, fruitId, fruitName) {
     axios
       .put(`${this.state.url}/data/user/`, { userId, fruitId })
       .then(response => {
@@ -31,7 +31,7 @@ class UserCount extends React.Component {
           //need to increase in state and display
         } else {
           //display message that all fruit is taken
-          this.props.handleMsg(true, 'None left!');
+          this.props.handleMsg(true, `Sorry, ${fruitName} is all gone!`);
         }
       });
   }
@@ -55,7 +55,11 @@ class UserCount extends React.Component {
                       <span
                         key={userInfo.id + userInfo.name + fruitInfo.id}
                         onClick={() =>
-                          this.handleClick(userInfo.id, fruitInfo.id)
+                          this.handleClick(
+                            userInfo.id,
+                            fruitInfo.id,
+                            fruitInfo.name
+                          )
                         }
                       >
                         {fruitInfo.name}
