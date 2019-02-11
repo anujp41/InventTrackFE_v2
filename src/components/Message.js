@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Message.css';
 
-const Message = () => <h2 className="info-message">This is a message!</h2>;
+const Message = ({ msgBody, handleMsg }) => {
+  useEffect(() => {
+    setTimeout(() => handleMsg(false), 2000);
+  });
+  return <h2 className="info-message">{msgBody}</h2>;
+};
 
 export default Message;

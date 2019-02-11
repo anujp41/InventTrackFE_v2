@@ -4,10 +4,11 @@ import TotalCount from './TotalCount';
 import UserCount from './UserCount';
 
 const Counter = props => {
+  const { handleMsg, ...userProps } = props; //extracts handleMsg as not needed in TotalCount
   return (
     <div className="container">
-      <TotalCount {...props} />
-      <UserCount />
+      <TotalCount {...userProps} />
+      <UserCount {...props} />
     </div>
   );
 };

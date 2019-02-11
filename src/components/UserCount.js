@@ -19,19 +19,26 @@ class UserCount extends React.Component {
     axios
       .get(`${url}/data/user`)
       .then(response => this.setState({ userData: response.data, url }));
-    // .then(this.updateState)
-    // .then(() => this.setState({ url }))
-    // .catch(err => console.log('error ', err));
   }
 
   handleClick(userId, fruitId) {
     axios
       .put(`${this.state.url}/data/user/`, { userId, fruitId })
-      .then(response => console.log('response ', response));
+      .then(response => {
+        console.log('respinse ', response);
+        if (response.data !== 'Gone') {
+          const { userData } = this.state;
+          //need to increase in state and display
+        } else {
+          //display message that all fruit is taken
+          this.props.handleMsg(true, 'None left!');
+        }
+      });
   }
 
   render() {
     const { userData } = this.state;
+    console.log(userData);
     return (
       <>
         <div className="header">User & Fruits</div>
