@@ -13,7 +13,6 @@ class TotalCount extends React.Component {
     this.modalView = this.modalView.bind(this);
     this.saveData = this.saveData.bind(this);
     this.state = {
-      url: '',
       apiData: [],
       showModal: false
     };
@@ -35,15 +34,9 @@ class TotalCount extends React.Component {
         delete apiData[id];
         this.updateState({ data: apiData });
       });
-    // will call data for most recent fruit counter data
-    const url =
-      process.env.NODE_ENV === 'development'
-        ? process.env.REACT_APP_DEV_URL
-        : process.env.REACT_APP_PROD_URL;
     axios
-      .get(`${url}/data/fruit`)
+      .get(`/data/fruit`)
       .then(this.updateState)
-      .then(() => this.setState({ url }))
       .catch(err => console.log('error ', err));
   }
   updateState(response) {
@@ -55,7 +48,7 @@ class TotalCount extends React.Component {
     this.setState({ apiData: newApiData });
   }
   handleClick(itemId, toDo) {
-    axios.get(`${this.state.url}/data/fruit/${toDo}/${itemId}`, {
+    axios.get(`/data/fruit/${toDo}/${itemId}`, {
       headers: {
         Socket: localStorage.getItem('socketId')
       }
@@ -71,7 +64,7 @@ class TotalCount extends React.Component {
   updateName(itemId) {
     const updatedName = this.refs[`fruit${itemId}`].textContent;
     axios
-      .post(`${this.state.url}/data/fruit/name/${itemId}`, {
+      .post(`/data/fruit/name/${itemId}`, {
         name: updatedName
       })
       .then(this.updateState);
@@ -80,7 +73,7 @@ class TotalCount extends React.Component {
     this.setState({ showModal });
   }
   saveData(fruitData) {
-    axios.post(`${this.state.url}/data/fruit/fruit`, fruitData).then(res => {
+    axios.post(`/data/fruit/fruit`, fruitData).then(res => {
       if (res.status === 200) {
         this.updateState(res);
         this.modalView(false);

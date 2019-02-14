@@ -17,11 +17,16 @@ class App extends Component {
     };
   }
   componentDidMount() {
-    const socket = socketIOClient('http://localhost:8000');
-    socket.on('connect', () => {
-      this.setState({ socket });
-      localStorage.setItem('socketId', socket.id);
-    });
+    const HOST = window.location.origin.replace(/^http/, 'ws');
+    const socket = socketIOClient(
+      process.env.NODE_ENV === 'production' ? HOST : 'http://localhost:8000'
+    );
+    socket
+      .on('connect', () => {
+        this.setState({ socket });
+        localStorage.setItem('socketId', socket.id);
+      })
+      .on('connected', data => console.log(`socket Msg: ${data}`));
   }
   componentWillUnmount() {
     this.state.socket.disconnect().then(this.setState({ socket: null }));

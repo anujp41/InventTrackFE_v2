@@ -7,43 +7,39 @@ class UserCount extends React.Component {
     super();
     this.handleClick = this.handleClick.bind(this);
     this.state = {
-      userData: []
+      userData: {}
     };
   }
 
   componentDidMount() {
-    const url =
-      process.env.NODE_ENV === 'development'
-        ? process.env.REACT_APP_DEV_URL
-        : process.env.REACT_APP_PROD_URL;
     axios
-      .get(`${url}/data/user`)
-      .then(response => this.setState({ userData: response.data, url }));
+      .get(`/data/user`)
+      .then(response => {
+        console.log('response ', response);
+        return response;
+      })
+      .then(response => this.setState({ userData: response.data }));
   }
 
   handleClick(userId, fruitId, fruitName) {
-    axios
-      .put(`${this.state.url}/data/user/`, { userId, fruitId })
-      .then(response => {
-        if (response.data !== 'Gone') {
-          this.props.handleMsg(
-            true,
-            `Congrats, you have one more ${fruitName}!`
-          );
-        } else {
-          this.props.handleMsg(true, `Sorry, ${fruitName} is all gone!`);
-        }
-      });
+    axios.put('/data/user/', { userId, fruitId }).then(response => {
+      if (response.data !== 'Gone') {
+        this.props.handleMsg(true, `Congrats, you have one more ${fruitName}!`);
+      } else {
+        this.props.handleMsg(true, `Sorry, ${fruitName} is all gone!`);
+      }
+    });
   }
 
   render() {
     const { userData } = this.state;
+    const userDataValues = Object.values(userData);
     return (
       <>
         <div className="header">User & Fruits</div>
         <div className="col-container">
-          {userData.length &&
-            userData.map(userInfo => (
+          {userDataValues.length &&
+            userDataValues.map(userInfo => (
               <div className="table-grid" key={userInfo.name}>
                 <span key={userInfo.id + userInfo.name}>{userInfo.name}</span>
                 {userInfo.Consumer.length ? (
