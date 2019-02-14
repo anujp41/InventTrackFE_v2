@@ -12,12 +12,22 @@ class UserCount extends React.Component {
   }
 
   componentDidMount() {
+    this.props.socket.on('newCount', updated => {
+      if (updated === null) return;
+      const { userId, fruitId, counter } = updated;
+      const { userData } = this.state;
+      const user = userData[userId];
+      user.Consumer.forEach(fruit => {
+        return fruit.id === fruitId
+          ? (fruit.UserFruit.counter = counter)
+          : fruit;
+      });
+      userData[userId] = user;
+      this.setState({ userData });
+    });
+
     axios
       .get(`/data/user`)
-      .then(response => {
-        console.log('response ', response);
-        return response;
-      })
       .then(response => this.setState({ userData: response.data }));
   }
 
