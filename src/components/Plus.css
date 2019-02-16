@@ -2,7 +2,7 @@
 .fruit,
 .user {
   position: absolute;
-  bottom: 7.5vh;
+  bottom: 10vh;
   right: 3vw;
   transition: all 0.75s;
   transition-delay: 0.05s;
