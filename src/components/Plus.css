@@ -1,0 +1,56 @@
+.icon,
+.fruit,
+.user {
+  position: absolute;
+  top: 75vh;
+  right: 5px;
+  transition: all 0.75s;
+  transition-delay: 0.05s;
+  background-image: linear-gradient(135deg, #628ee0, #9ee062);
+  width: 3rem;
+  height: 3rem;
+  text-align: center;
+  line-height: 2.5rem;
+  color: white;
+  border-radius: 50%;
+}
+
+.fruit,
+.user {
+  z-index: -1;
+}
+
+.icon {
+  font-size: 3rem;
+}
+
+.fruit,
+.user {
+  line-height: 3rem;
+}
+
+.icon::after {
+  content: '+';
+}
+
+.fruit::after {
+  content: 'Fruit';
+}
+
+.user::after {
+  content: 'User';
+}
+
+.plus:hover > .icon {
+  transform: rotate(90deg);
+}
+
+.plus:hover > .fruit {
+  z-index: 1;
+  transform: translateY(-7.5vh);
+}
+
+.plus:hover > .user {
+  z-index: 1;
+  transform: translateY(-15vh);
+}
