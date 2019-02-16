@@ -2,11 +2,12 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -45%);
+  transform: translate(-50%, -49%);
   height: 90%;
   width: 95%;
   box-shadow: -5px 5px 20px 10px #e0d2ef;
   overflow: scroll;
+  height: 83%;
 }
 
 .col-container {
@@ -14,6 +15,7 @@
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   padding: 0 15px;
   margin-bottom: 20px;
+  grid-gap: 15px;
 }
 
 .header {

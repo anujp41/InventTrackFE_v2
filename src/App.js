@@ -3,6 +3,7 @@ import { Route, Switch, Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { Counter, Wrapper, Message } from './components';
 import socketIOClient from 'socket.io-client';
+import Plus from './components/Plus';
 
 const webHistory = createBrowserHistory();
 
@@ -59,6 +60,7 @@ class App extends Component {
           {this.state.displayMsg && (
             <Message handleMsg={this.msgModal} msgBody={this.state.msgBody} />
           )}
+          <Plus />
         </Wrapper>
       </Router>
     );

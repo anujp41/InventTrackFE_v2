@@ -3,7 +3,7 @@ import './Counter.css';
 import TotalCount from './TotalCount';
 import UserCount from './UserCount';
 import Remaining from './Remaining';
-import Plus from './Plus';
+import Modal from './Modal';
 
 const Counter = props => {
   const { handleMsg, ...userProps } = props; //extracts handleMsg as not needed in TotalCount
@@ -12,7 +12,11 @@ const Counter = props => {
       <TotalCount {...userProps} />
       <UserCount {...props} />
       <Remaining socket={props.socket} />
-      <Plus />
+      {/* <Modal
+        closeModal={this.modalView}
+        apiURL={this.state.url}
+        handleSave={this.saveData}
+      /> */}
     </div>
   );
 };

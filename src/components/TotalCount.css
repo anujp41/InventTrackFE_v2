@@ -6,6 +6,12 @@
   padding: 5px 0;
 }
 
+/* .fruit-container {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  border-bottom: 2px dashed #7f827e;
+} */
+
 button {
   height: 35px;
   width: 35px;

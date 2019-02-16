@@ -10,7 +10,6 @@ class TotalCount extends React.Component {
     this.updateApiData = this.updateApiData.bind(this);
     this.handleEnter = this.handleEnter.bind(this);
     this.updateName = this.updateName.bind(this);
-    this.modalView = this.modalView.bind(this);
     this.saveData = this.saveData.bind(this);
     this.state = {
       apiData: [],
@@ -69,14 +68,10 @@ class TotalCount extends React.Component {
       })
       .then(this.updateState);
   }
-  modalView(showModal) {
-    this.setState({ showModal });
-  }
   saveData(fruitData) {
     axios.post(`/data/fruit/fruit`, fruitData).then(res => {
       if (res.status === 200) {
         this.updateState(res);
-        this.modalView(false);
       }
     });
   }
@@ -122,19 +117,6 @@ class TotalCount extends React.Component {
                 </section>
               </div>
             ))}
-          {/* <button
-          className="add-button center"
-          onClick={() => this.modalView(true)}
-        >
-          Add Item
-        </button> */}
-          {/* {this.state.showModal && (
-          <Modal
-            closeModal={this.modalView}
-            apiURL={this.state.url}
-            handleSave={this.saveData}
-          />
-        )} */}
         </div>
       </React.Fragment>
     );
