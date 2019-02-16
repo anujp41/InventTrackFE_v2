@@ -13,6 +13,7 @@
   line-height: 2.5rem;
   color: white;
   border-radius: 50%;
+  border: 3px solid white;
 }
 
 .fruit,
@@ -53,4 +54,12 @@
 .plus:hover > .user {
   z-index: 1;
   transform: translateY(-15vh);
+}
+
+.fruit:hover,
+.user:hover {
+  cursor: pointer;
+  border-color: coral;
+  color: #af1da3;
+  font-weight: 900;
 }
