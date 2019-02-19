@@ -11,17 +11,18 @@ class App extends Component {
   constructor() {
     super();
     this.msgModal = this.msgModal.bind(this);
+    this.addModal = this.addModal.bind(this);
     this.state = {
       socket: null,
       displayMsg: false,
-      msgBody: ''
+      msgBody: '',
+      showModal: false,
+      modalType: ''
     };
   }
   componentDidMount() {
     const HOST = window.location.origin.replace(/^http/, 'ws');
-    const socket = socketIOClient(
-      process.env.NODE_ENV === 'production' ? HOST : 'http://localhost:8000'
-    );
+    const socket = socketIOClient(HOST);
     socket
       .on('connect', () => {
         this.setState({ socket });
@@ -34,6 +35,9 @@ class App extends Component {
   }
   msgModal(displayMsg, msgBody = '') {
     this.setState({ displayMsg, msgBody });
+  }
+  addModal(itemToAdd, modalVisible = true) {
+    this.setState({ showModal: modalVisible, modalType: itemToAdd });
   }
   render() {
     return (
@@ -51,6 +55,9 @@ class App extends Component {
                       socket={this.state.socket}
                       cookies={this.props.cookies}
                       handleMsg={this.msgModal}
+                      showModal={this.state.showModal}
+                      modalType={this.state.modalType}
+                      addModal={this.addModal}
                     />
                   ) : null
                 }
@@ -60,7 +67,7 @@ class App extends Component {
           {this.state.displayMsg && (
             <Message handleMsg={this.msgModal} msgBody={this.state.msgBody} />
           )}
-          <Plus />
+          <Plus addModal={this.addModal} />
         </Wrapper>
       </Router>
     );

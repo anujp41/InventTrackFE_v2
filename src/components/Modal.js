@@ -1,6 +1,60 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Modal.css';
 
+const Modal = props => {
+  const [detail, setDetail] = useState({ name: '', count: 0 });
+  console.log('props ', props);
+  const updateState = (name, value) => {
+    setDetail[name] = value;
+  };
+
+  const handleSubmit = () => console.log('i will submit');
+
+  const renderUserInput = () => (
+    <input
+      className="fruit"
+      type="number"
+      name="name"
+      placeholder="Count"
+      value={detail.name}
+      onChange={updateState}
+    />
+  );
+
+  const renderFruitInput = () => (
+    <>
+      <input
+        className="fruit"
+        type="text"
+        name="name"
+        placeholder="Fruit Name"
+        value={detail.name}
+        onChange={updateState}
+      />
+      <input
+        className="fruit"
+        type="number"
+        name="count"
+        placeholder="Count"
+        value={detail.count}
+        onChange={updateState}
+      />
+    </>
+  );
+  return (
+    <div className="modal-container">
+      <div className="modal">
+        <span onClick={() => props.addModal('', false)}>X</span>
+        {props.modalType === 'user' ? renderUserInput() : renderFruitInput()}
+        <button className="add-button margin-auto" onClick={handleSubmit}>
+          Submit
+        </button>
+      </div>
+    </div>
+  );
+};
+
+/*
 class Modal extends React.Component {
   constructor(props) {
     super(props);
@@ -26,7 +80,7 @@ class Modal extends React.Component {
     return (
       <div className="modal-container">
         <div className="modal">
-          <span onClick={() => this.props.closeModal(false)}>X</span>
+          <span onClick={() => this.props.addModal('', false)}>X</span>
           <input
             className="fruit"
             type="text"
@@ -54,5 +108,6 @@ class Modal extends React.Component {
     );
   }
 }
+*/
 
 export default Modal;

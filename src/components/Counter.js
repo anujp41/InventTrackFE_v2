@@ -6,17 +6,14 @@ import Remaining from './Remaining';
 import Modal from './Modal';
 
 const Counter = props => {
-  const { handleMsg, ...userProps } = props; //extracts handleMsg as not needed in TotalCount
+  const { handleMsg, showModal, modalType, addModal, ...userProps } = props; //extracts handleMsg as not needed in TotalCount
+
   return (
     <div className="container">
       <TotalCount {...userProps} />
       <UserCount {...props} />
       <Remaining socket={props.socket} />
-      {/* <Modal
-        closeModal={this.modalView}
-        apiURL={this.state.url}
-        handleSave={this.saveData}
-      /> */}
+      {props.showModal && <Modal addModal={addModal} modalType={modalType} />}
     </div>
   );
 };

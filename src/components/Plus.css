@@ -1,6 +1,6 @@
 .icon,
-.fruit,
-.user {
+.fruit-add,
+.user-add {
   position: absolute;
   bottom: 10vh;
   right: 3vw;
@@ -16,17 +16,18 @@
   border: 3px solid white;
 }
 
-.fruit,
-.user {
+.fruit-add,
+.user-add {
   z-index: -1;
+  font-size: 1rem;
 }
 
 .icon {
   font-size: 3rem;
 }
 
-.fruit,
-.user {
+.fruit-add,
+.user-add {
   line-height: 3rem;
 }
 
@@ -34,11 +35,11 @@
   content: '+';
 }
 
-.fruit::after {
+.fruit-add::after {
   content: 'Fruit';
 }
 
-.user::after {
+.user-add::after {
   content: 'User';
 }
 
@@ -46,18 +47,18 @@
   transform: rotate(90deg);
 }
 
-.plus:hover > .fruit {
+.plus:hover > .fruit-add {
   z-index: 1;
-  transform: translateY(-7.5vh);
+  transform: translateY(-55px);
 }
 
-.plus:hover > .user {
+.plus:hover > .user-add {
   z-index: 1;
-  transform: translateY(-15vh);
+  transform: translateY(-110px);
 }
 
-.fruit:hover,
-.user:hover {
+.fruit-add:hover,
+.user-add:hover {
   cursor: pointer;
   border-color: coral;
   color: #af1da3;
