@@ -56,7 +56,7 @@
   z-index: 1;
   transform: translateY(-110px);
 }
-
+.plus:hover > .icon,
 .fruit-add:hover,
 .user-add:hover {
   cursor: pointer;

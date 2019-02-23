@@ -13,7 +13,13 @@ const Counter = props => {
       <TotalCount {...userProps} />
       <UserCount {...props} />
       <Remaining socket={props.socket} />
-      {props.showModal && <Modal addModal={addModal} modalType={modalType} />}
+      {props.showModal && (
+        <Modal
+          addModal={addModal}
+          modalType={modalType}
+          handleMsg={handleMsg}
+        />
+      )}
     </div>
   );
 };

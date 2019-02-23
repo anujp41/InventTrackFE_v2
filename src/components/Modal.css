@@ -56,6 +56,28 @@
   font-size: 2rem;
 }
 
+.info-error {
+  border-bottom-color: #e84233;
+}
+
+.info-error::placeholder {
+  color: #e84233;
+  opacity: 1;
+}
+
 .margin-auto {
   margin: 0 auto;
+}
+
+.err-msg {
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12px;
+  background-color: rgba(232, 92, 92, 1);
+  color: white;
+  padding: 5px 0;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

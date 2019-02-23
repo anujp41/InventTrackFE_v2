@@ -1,46 +1,94 @@
 import React, { useState } from 'react';
 import './Modal.css';
+import axios from 'axios';
 
 const Modal = props => {
-  const [detail, setDetail] = useState({ name: '', count: 0 });
-  console.log('props ', props);
-  const updateState = (name, value) => {
-    setDetail[name] = value;
+  let [saveDetail, setSaveDetail] = useState({
+    name: '',
+    count: '',
+    nameError: false,
+    countError: false
+  });
+
+  const updateState = event => {
+    const {
+      target: { name: itemName, value }
+    } = event;
+    setSaveDetail({ ...saveDetail, [itemName]: value });
   };
 
-  const handleSubmit = () => console.log('i will submit');
+  const handleSubmit = () => {
+    const saveObj = {};
+    const { name, count } = saveDetail;
+    if (name.length === 0) {
+      setSaveDetail({ ...saveDetail, nameError: true });
+      setTimeout(() => setSaveDetail({ ...saveDetail, nameError: false }), 750);
+      return;
+    }
+    if (Number.isInteger(count) && count <= 0) {
+      setSaveDetail({ ...saveDetail, countError: true });
+      setTimeout(
+        () => setSaveDetail({ ...saveDetail, countError: false }),
+        750
+      );
+      return;
+    }
+    props.modalType === 'user'
+      ? Object.assign(saveObj, { name })
+      : Object.assign(saveObj, { name, count: parseInt(count) });
+    console.log('to save', saveObj);
+    console.log('the type is ', props.modalType);
+    axios.post(`/data/${props.modalType}`, saveObj).then(response => {
+      const { msg } = response.data;
+      if (msg === 'exists')
+        return props.handleMsg(true, `Sorry, ${name} already exists!`);
+    });
+  };
 
   const renderUserInput = () => (
-    <input
-      className="fruit"
-      type="number"
-      name="name"
-      placeholder="Count"
-      value={detail.name}
-      onChange={updateState}
-    />
+    <>
+      <input
+        className={`fruit ${saveDetail.nameError ? 'info-error' : ''}`}
+        type="text"
+        name="name"
+        placeholder="Name of User"
+        value={saveDetail.name}
+        onChange={updateState}
+      />
+      {saveDetail.nameError && (
+        <aside className="err-msg">You did not enter a name!</aside>
+      )}
+    </>
   );
 
   const renderFruitInput = () => (
     <>
       <input
-        className="fruit"
+        className={`fruit ${saveDetail.nameError ? 'info-error' : ''}`}
         type="text"
         name="name"
-        placeholder="Fruit Name"
-        value={detail.name}
+        placeholder="Name of Fruit"
+        value={saveDetail.name}
         onChange={updateState}
       />
+      {saveDetail.nameError && (
+        <aside className="err-msg">You did not enter a name!</aside>
+      )}
       <input
-        className="fruit"
+        className={`fruit ${saveDetail.countError ? 'info-error' : ''}`}
         type="number"
+        min={0}
         name="count"
-        placeholder="Count"
-        value={detail.count}
+        placeholder="Total Count"
+        value={saveDetail.count}
         onChange={updateState}
       />
+      {saveDetail.countError && (
+        <aside className="err-msg">Please enter a number greater than 0!</aside>
+      )}
     </>
   );
+
   return (
     <div className="modal-container">
       <div className="modal">
