@@ -21,7 +21,9 @@ class App extends Component {
     };
   }
   componentDidMount() {
-    const HOST = window.location.origin.replace(/^http/, 'ws');
+    const HOST = window.location.origin
+      .replace(/^http/, 'ws')
+      .replace(3000, 8000);
     const socket = socketIOClient(HOST);
     socket
       .on('connect', () => {

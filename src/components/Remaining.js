@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import './Remaining.css';
 
-const Remaining = React.memo(props => {
+const Remaining = props => {
   const [remainCount, setRemainCount] = useState({});
   const [dataReceived, setDataReceived] = useState(false);
+  const [randItem, setRandItem] = useState(Math.random());
   useEffect(() => {
     !dataReceived && props.socket.emit('getData', 'fruitData');
     props.socket.on('remainder', remainder => {
       setDataReceived(true); //once dataReceived set to true in state, no further requests; otherwise continuous requests sent as state continuously being updated
       setRemainCount(remainder);
     });
+    props.socket.on('updateThis', () =>
+      props.socket.emit('getData', 'fruitData')
+    );
   });
   const remainingFruitData = Object.values(remainCount);
+  console.log('doing render');
   return (
     <>
       <div className="header">Remainder fruits</div>
@@ -25,6 +30,6 @@ const Remaining = React.memo(props => {
       </div>
     </>
   );
-});
+};
 
 export default Remaining;
