@@ -36,12 +36,13 @@ const Modal = props => {
     props.modalType === 'user'
       ? Object.assign(saveObj, { name })
       : Object.assign(saveObj, { name, count: parseInt(count) });
-    console.log('to save', saveObj);
-    console.log('the type is ', props.modalType);
     axios.post(`/data/${props.modalType}`, saveObj).then(response => {
       const { msg } = response.data;
-      if (msg === 'exists')
+      if (msg === 'exists') {
         return props.handleMsg(true, `Sorry, ${name} already exists!`);
+      } else {
+        props.addModal('', false);
+      }
     });
   };
 
