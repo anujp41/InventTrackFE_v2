@@ -32,7 +32,8 @@ class TotalCount extends React.Component {
         const { apiData } = this.state;
         delete apiData[id];
         this.updateState({ data: apiData });
-      });
+      })
+      .on('newFruit', fruit => this.updateApiData(fruit));
     axios
       .get(`/data/fruit`)
       .then(this.updateState)
