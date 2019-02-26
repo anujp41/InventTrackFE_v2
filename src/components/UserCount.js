@@ -1,13 +1,16 @@
 import React from 'react';
 import axios from 'axios';
 import './UserCount.css';
+import _ from 'lodash';
 
 class UserCount extends React.Component {
   constructor() {
     super();
     this.handleClick = this.handleClick.bind(this);
+    this.checkFruits = this.checkFruits.bind(this);
     this.state = {
-      userData: {}
+      userData: {},
+      allFruits: []
     };
   }
 
@@ -28,11 +31,26 @@ class UserCount extends React.Component {
       })
       .on('newUser', newUser => {
         this.setState({ userData: { ...this.state.userData, ...newUser } });
-      });
+      })
+      .on('newFruit', () =>
+        this.setState({ userData: this.checkFruits(this.state.userData) })
+      );
 
-    axios
-      .get(`/data/user`)
-      .then(response => this.setState({ userData: response.data }));
+    axios.get(`/data/user`).then(response => {
+      const { data } = response;
+      const updatedData = this.checkFruits(data);
+      this.setState({ userData: updatedData });
+    });
+  }
+
+  static getDerivedStateFromProps(nextProps, currState) {
+    if (currState.allFruits.length !== nextProps.allFruits.length) {
+      return {
+        allFruits: nextProps.allFruits
+      };
+    } else {
+      return null;
+    }
   }
 
   handleClick(userId, fruitId, fruitName) {
@@ -45,11 +63,31 @@ class UserCount extends React.Component {
     });
   }
 
+  checkFruits(userDetail) {
+    const userInfo = _.cloneDeep(userDetail);
+    for (let userKey in userInfo) {
+      let itemIdx = 0;
+      const userFruitData = userInfo[userKey].Consumer;
+      const userFruitCount = userFruitData.length;
+      const allFruits = _.cloneDeep(this.props.allFruits);
+      allFruits.forEach((fruitData, fruitDataIdx) => {
+        if (userFruitCount > 0 && fruitData.id === userFruitData[itemIdx].id) {
+          allFruits[fruitDataIdx] = userFruitData[itemIdx];
+          itemIdx = Math.min(itemIdx + 1, userFruitCount - 1);
+        } else {
+          fruitData.UserFruit = { counter: 0 };
+        }
+      });
+      userInfo[userKey].Consumer = allFruits;
+    }
+    return userInfo;
+  }
+
   render() {
-    const { userData } = this.state;
-    console.log('state ', userData);
+    const { userData, allFruits } = this.state;
     const userDataValues = Object.values(userData);
-    return (
+    console.log('UPDATED!', userDataValues);
+    return allFruits.length > 0 ? (
       <>
         <div className="header">User & Fruits</div>
         <div className="col-container">
@@ -98,7 +136,7 @@ class UserCount extends React.Component {
             ))}
         </div>
       </>
-    );
+    ) : null;
   }
 }
 

@@ -31,15 +31,20 @@ class TotalCount extends React.Component {
       .on('fruit-delete', id => {
         const { apiData } = this.state;
         delete apiData[id];
+        //add code to remove fruit from list
         this.updateState({ data: apiData });
       })
-      .on('newFruit', fruit => this.updateApiData(fruit));
+      .on('newFruit', fruit => {
+        this.props.gotFruits([fruit]);
+        this.updateApiData(fruit);
+      });
     axios
       .get(`/data/fruit`)
       .then(this.updateState)
       .catch(err => console.log('error ', err));
   }
   updateState(response) {
+    this.props.gotFruits(response.data);
     this.setState({ apiData: response.data });
   }
   updateApiData(updatedData) {
@@ -53,7 +58,6 @@ class TotalCount extends React.Component {
         Socket: localStorage.getItem('socketId')
       }
     });
-    // .then(response => console.log('response complete ', response));
   }
   handleEnter(event, itemId) {
     if (event.keyCode === 13) {
