@@ -4,7 +4,6 @@ import TotalCount from './TotalCount';
 import UserCount from './UserCount';
 import Remaining from './Remaining';
 import Modal from './Modal';
-import _ from 'lodash';
 
 const Counter = props => {
   const [fruits, setFruits] = useState([]);

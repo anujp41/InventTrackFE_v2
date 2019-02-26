@@ -30,7 +30,8 @@ class UserCount extends React.Component {
         this.setState({ userData });
       })
       .on('newUser', newUser => {
-        this.setState({ userData: { ...this.state.userData, ...newUser } });
+        const newUserData = { ...this.state.userData, ...newUser };
+        this.setState({ userData: this.checkFruits(newUserData) });
       })
       .on('newFruit', () =>
         this.setState({ userData: this.checkFruits(this.state.userData) })
