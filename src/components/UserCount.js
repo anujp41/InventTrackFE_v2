@@ -86,7 +86,6 @@ class UserCount extends React.Component {
   render() {
     const { userData, allFruits } = this.state;
     const userDataValues = Object.values(userData);
-    console.log('UPDATED!', userDataValues);
     return allFruits.length > 0 ? (
       <>
         <div className="header">User & Fruits</div>
